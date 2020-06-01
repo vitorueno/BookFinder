@@ -11,18 +11,23 @@
 </head>
 
 <body>
+
+  <!-- Page 'header' -->
   <div class="container">
     <div class="row">
       <div class="col">
         <h1 class="h1 d-flex justify-content-center">BookFinder</h1>
       </div>
     </div>
+
+
     <div class="row d-flex justify-content-center">
       <div class="col-6">
-        <form class="form-group">
+        <form class="form-group" id='info-form'>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Type author, book name, subject..."
-              aria-label="Recipient's username" aria-describedby="basic-addon2" id="books"/>
+              id="search_params" />
+              <!-- aria-label="Recipient's username" aria-describedby="basic-addon2"  -->
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" id="search_btn">
                 Search
@@ -32,9 +37,14 @@
         </form>
       </div>
     </div>
-  </div>
 
-  <div id="result"></div>
+
+    <li class="book">
+      <strong>Book title</strong>
+      <p>things</p>
+    </li>
+      
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -45,8 +55,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="script.js"></script>
+
+  <script src="bundle.js"></script>
 </body>
 
 </html>
