@@ -10,7 +10,7 @@ class App {
     }
 
 
-    registerHandlers() {
+    registerHandlers() {        
         this.formEl.onsubmit = event => this.addBook(event);
     }
 
@@ -31,7 +31,7 @@ class App {
     }
 
     render() {
-        this.bookList.innerHTML = '';
+        this.bookList.innerHTML = ''
 
         this.books.forEach(book => {
             let imgEL = document.createElement('img');
@@ -64,27 +64,28 @@ class App {
             let linkEL = document.createElement('a');
             linkEL.setAttribute('targe','_blank');
             linkEL.setAttribute('href', book.bookLink);
-            linkEL.appendChild(createTextNode(book.title));
+            linkEL.appendChild(document.createTextNode(book.title));
 
             divTitle.appendChild(strongTitle);
             divTitle.appendChild(linkEL);
 
             divAuthor.appendChild(strongAuthor);
-            divAuthor.appendChild(createTextNode(book.author));
+            divAuthor.appendChild(document.createTextNode(book.author));
 
             divPubliDate.appendChild(strongPubliDate);
-            divPubliDate.appendChild(createTextNode(book.publicationDate));
+            divPubliDate.appendChild(document.createTextNode(book.publicationDate));
 
             divPublisher.appendChild(strongPublisher);
-            divPublisher.appendChild(createTextNode(book.publisher));
+            divPublisher.appendChild(document.createTextNode(book.publisher));
             
-            let divBook = createElement('div');
-            linkEL.appendChild(imgEL);
-            linkEL.appendChild(divtitle);
-            linkEL.appendChild(divAuthor);
-            linkEL.appendChild(divPubliDate);
-            linkEL.appendChild(divPublisher);
-
+            let divBook = document.createElement('div');
+            divBook.appendChild(imgEL);
+            divBook.appendChild(divTitle);
+            divBook.appendChild(divAuthor);
+            divBook.appendChild(divPubliDate);
+            divBook.appendChild(divPublisher);
+            
+            console.log(divBook);
             this.bookList.appendChild(divBook);
         });
     }
