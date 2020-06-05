@@ -1,9 +1,11 @@
+import api from "./api";
+
 class App {
     constructor() {
         this.books = [];
 
         this.formEl = document.getElementById('info-form');
-        this.search = document.getElementById('search_params').innerText;
+        this.bookInput = document.querySelector('input[name=search_params]')
         this.bookList = document.getElementById('book_list');
 
         this.registerHandlers();
@@ -15,19 +17,29 @@ class App {
     }
 
 
-    addBook(event) {
+    async addBook(event) {
         event.preventDefault();
+        
+        const search = this.bookInput.value;
 
-        this.books.push({
-            link: 'https://books.google.com.br/books?id=XsJ645BbokAC&printsec=frontcover&dq=tolkien&hl=&cd=2&source=gbs_api#v=onepage&q=tolkien&f=false',
-            title: 'O Silmarillion',
-            author: 'J.R.R. Tolkien',
-            publicationDate: '2019-03-18',
-            publisher: 'HarperCollins Brasil',
-            img: 'http://books.google.com/books/content?id=B3uFDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+        if (search.length === 0) return;
+        
+        const requestedBooks = await api.get(`/volumes?q=${search}`);
+
+        console.log(requestedBooks);
+
+        requestedBooks.data.items.forEach(book => {
+            this.books.push({
+            link: book.selfLink,
+            title: book.volumeInfo.title,
+            author: book.volumeInfo.authors,
+            publicationDate: book.volumeInfo.publishedDate,
+            publisher: book.volumeInfo.publisher,
+            img: book.volumeInfo.imageLinks.thumbnail  ? book.volumeInfo.imageLinks.thumbnail : null
+            })
+            this.render();
         });
 
-        this.render();
     }
 
     render() {
@@ -85,7 +97,6 @@ class App {
             divBook.appendChild(divPubliDate);
             divBook.appendChild(divPublisher);
             
-            console.log(divBook);
             this.bookList.appendChild(divBook);
         });
     }
