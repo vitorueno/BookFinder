@@ -1,0 +1,146 @@
+/* resets */ 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    outline: 0;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #4B4E6D;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    background: #4B4E6D;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-container {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    width: 720px;
+    height: 44px;
+}
+
+form input {
+    width: 79%;
+    border-radius: 4px;
+    border: #4B4E6D 2px solid;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.button {
+    width: 20%;
+    border-radius: 4px;
+    background: #4B4E6D;
+    border: 0;
+    color: #fff;
+}
+
+.book-list-container {
+    max-width: 720px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-direction: column;
+}
+
+.book-card {
+    flex: 1;
+    background: #4B4E6D;
+    justify-content: center;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    border: 1px solid #4B4E6D;
+}
+
+.book-card img {
+    height: 360px;
+    width: 500px;
+    border-radius: 4px 0 0 4px;
+}
+
+
+.book-card div {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px 4px;
+}
+
+
+.book-card div p {
+    margin-bottom: 24px;
+    font-size: 16px; 
+}
+
+.book-card div p:first-child {
+    font-weight: bold;
+}
+
+.book-card div button {
+    margin-top: 50px;
+    padding: 15px 40px;
+    border-radius: 4px;
+    background: #fff;
+    border: 0;
+    color: #4B4E6D;
+    font-weight: bold;
+    text-align: center;
+}
+
+.book-card div button:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .book-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-card img {
+        width: 100%;
+        height: 250px;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .book-card div {
+        margin-top: 10px;
+    }
+
+    .book-card div p {
+        margin-bottom: 5px;
+    }
+
+    .book-card div button {
+        margin-top: 20px;
+    }
+}

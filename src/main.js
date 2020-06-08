@@ -13,91 +13,76 @@ class App {
 
 
     registerHandlers() {        
-        this.formEl.onsubmit = event => this.addBook(event);
+        this.formEl.onsubmit = event => this.addBooks(event);
     }
 
+    async removeOldSearchedBooks() {
+        this.books = []
+        this.bookList.innerHTML = ''
+    }
 
-    async addBook(event) {
+    async addBooks(event) {
         event.preventDefault();
+        await this.removeOldSearchedBooks()
         
         const search = this.bookInput.value;
 
         if (search.length === 0) return;
         
         const requestedBooks = await api.get(`/volumes?q=${search}`);
-
-        console.log(requestedBooks);
-
+        console.log(requestedBooks)
         requestedBooks.data.items.forEach(book => {
             this.books.push({
-            link: book.selfLink,
-            title: book.volumeInfo.title,
-            author: book.volumeInfo.authors,
-            publicationDate: book.volumeInfo.publishedDate,
-            publisher: book.volumeInfo.publisher,
-            img: book.volumeInfo.imageLinks.thumbnail  ? book.volumeInfo.imageLinks.thumbnail : null
+                link: book.volumeInfo.previewLink,
+                title: book.volumeInfo.title,
+                author: book.volumeInfo.authors,
+                publicationDate: book.volumeInfo.publishedDate,
+                publisher: book.volumeInfo.publisher,
+                img: book.volumeInfo.imageLinks.thumbnail  ? book.volumeInfo.imageLinks.thumbnail : null
             })
             this.render();
         });
 
     }
+    
+    redirectToBookPage(bookLink) {
+        window.location = bookLink
+    }
 
     render() {
-        this.bookList.innerHTML = ''
-
         this.books.forEach(book => {
-            let imgEL = document.createElement('img');
-            imgEL.setAttribute('src', book.img);
-             
-            let divTitle = document.createElement('div');
-            divTitle.setAttribute('class', 'book_title');
+            const bookCard = document.createElement('div');
+            bookCard.classList = 'book-card'
 
-            let divAuthor = document.createElement('div');
-            divAuthor.setAttribute('class', 'author');
+            const imgElement = document.createElement('img');
+            imgElement.setAttribute('src', book.img)
 
-            let divPubliDate = document.createElement('div');
-            divPubliDate.setAttribute('class', 'publication_date');
+            const divElement = document.createElement('div')
 
-            let divPublisher = document.createElement('div');
-            divPublisher.setAttribute('class', 'publisher');
+            const bookTitleParagraphElement = document.createElement('p')
+            bookTitleParagraphElement.innerHTML = book.title ? book.title : ''
 
-            let strongTitle = document.createElement('strong');
-            strongTitle.appendChild(document.createTextNode('Title: '))
+            const bookAuthorParagraphElement = document.createElement('p')
+            bookAuthorParagraphElement.innerHTML = book.author ? book.author : ''
 
-            let strongAuthor = document.createElement('strong');
-            strongAuthor.appendChild(document.createTextNode('Author: '))
-            
-            let strongPubliDate = document.createElement('strong');
-            strongPubliDate.appendChild(document.createTextNode('Publication Date: '))
-            
-            let strongPublisher = document.createElement('strong');
-            strongPublisher.appendChild(document.createTextNode('Publisher: '))
-            
-            let linkEL = document.createElement('a');
-            linkEL.setAttribute('targe','_blank');
-            linkEL.setAttribute('href', book.bookLink);
-            linkEL.appendChild(document.createTextNode(book.title));
+            const bookPublisherParagraphElement = document.createElement('p')
+            bookPublisherParagraphElement.innerHTML = book.publisher ? book.publisher : ''
 
-            divTitle.appendChild(strongTitle);
-            divTitle.appendChild(linkEL);
+            const buttonElement = document.createElement('button')
 
-            divAuthor.appendChild(strongAuthor);
-            divAuthor.appendChild(document.createTextNode(book.author));
+            buttonElement.setAttribute('href', book.link);
+            buttonElement.innerHTML = 'View'
+            buttonElement.addEventListener('click', () => this.redirectToBookPage(book.link))
 
-            divPubliDate.appendChild(strongPubliDate);
-            divPubliDate.appendChild(document.createTextNode(book.publicationDate));
+            divElement.appendChild(bookTitleParagraphElement)
+            divElement.appendChild(bookAuthorParagraphElement)
+            divElement.appendChild(bookPublisherParagraphElement)
+            divElement.appendChild(buttonElement)
 
-            divPublisher.appendChild(strongPublisher);
-            divPublisher.appendChild(document.createTextNode(book.publisher));
-            
-            let divBook = document.createElement('div');
-            divBook.appendChild(imgEL);
-            divBook.appendChild(divTitle);
-            divBook.appendChild(divAuthor);
-            divBook.appendChild(divPubliDate);
-            divBook.appendChild(divPublisher);
-            
-            this.bookList.appendChild(divBook);
+            bookCard.appendChild(imgElement)
+            bookCard.appendChild(divElement)
+
+            this.bookList.appendChild(bookCard);
         });
     }
 }
